@@ -30,6 +30,12 @@
         var imageInput = null;
         $(src).hide(); // for IE
 
+        var FileSupport = (function(undefined) {
+        return $("<input type='file'>")    // create test element
+                     .get(0)               // get native element
+                     .files !== undefined; // check whether files property is not undefined
+        })();
+
         // get settings from parent window
         eval("settings = window.parent.settings_{{ id }};");
 
@@ -72,6 +78,8 @@
                                             - (nEditable.innerHeight() - nEditable.height())  // editable's padding
                                             - (nEditor.outerHeight() - nEditor.innerHeight())  // editor's border
                                         );
+
+                if(!FileSupport) $('.note-image-uploader').hide();
                 
                 nEditable.height(setHeight);
             },
