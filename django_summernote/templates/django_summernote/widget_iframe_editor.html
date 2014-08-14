@@ -42,6 +42,20 @@
 
         $('#summernote').html(src.value);
 
+        window.rejigHeights = function() {
+            var nEditor = $('.note-editor');
+            var nToolbar = $('.note-toolbar');
+            var nEditable = $('.note-editable');
+            var setHeight = parseInt(
+                settings.height  // default
+                - nToolbar.outerHeight()  // toolbar height including margin,border,padding
+                - (nEditable.innerHeight() - nEditable.height())  // editable's padding
+                - (nEditor.outerHeight() - nEditor.innerHeight())  // editor's border
+            );
+
+            nEditable.height(setHeight);
+        };
+
         $('#summernote').summernote({
             height: settings.height,
             airMode: settings.airMode == 'true',
