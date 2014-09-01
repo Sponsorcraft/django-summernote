@@ -1925,8 +1925,7 @@
      */
     this.removeMedia = function ($editable, sValue, $target) {
       recordUndo($editable);
-        console.log($target);
-      //$target.detach();
+      $target.detach();
     };
   };
 
