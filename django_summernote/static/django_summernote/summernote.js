@@ -2700,6 +2700,22 @@
       }
 
       var oLayoutInfo = makeLayoutInfo(event.currentTarget || event.target);
+
+      // Get the current tag.
+      var currentTagName = false;
+      for(var i=0; i < editor.currentStyle().aAncestor.length; i++) {
+
+          try {
+              currentTagName = editor.currentStyle().aAncestor[i].tagName.toLowerCase();
+              break;
+          } catch (e) {
+              // Swallow.
+          }
+      }
+        
+      if(currentTagName != 'p') {
+          editor.formatBlock(oLayoutInfo.editable(), 'p', event.currentTarget || event.target)
+      }
       var item = list.head(clipboardData.items);
       var bClipboardImage = item.kind === 'file' && item.type.indexOf('image/') !== -1;
 
@@ -2758,6 +2774,8 @@
     var hToolbarAndPopoverClick = function (event) {
       var $btn = $(event.target).closest('[data-event]');
 
+//        console.log($btn);
+
       if ($btn.length) {
         var sEvent = $btn.attr('data-event'), sValue = $btn.attr('data-value');
 
@@ -2773,6 +2791,7 @@
         if (editor[sEvent]) { // on command
           var $editable = oLayoutInfo.editable();
           $editable.trigger('focus');
+//            console.log(editor[sEvent], sValue, $editable);
           editor[sEvent]($editable, sValue, $target);
         } else if (commands[sEvent]) {
           commands[sEvent].call(this, oLayoutInfo);
